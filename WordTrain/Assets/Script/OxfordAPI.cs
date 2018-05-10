@@ -4,11 +4,9 @@ using System.Collections.Generic;
 
 public class OxfordAPI : AbstractAPI
 {
-    private bool valid;
-
     void Awake()
     {
-        Headers = new System.Collections.Generic.Dictionary<string, string>();
+        Headers = new Dictionary<string, string>();
 
         BaseURL = "https://od-api.oxforddictionaries.com/api/v1/";
         Key = "54c3297ec769a7233b81ec5a1b68ac67";
@@ -17,18 +15,16 @@ public class OxfordAPI : AbstractAPI
         Headers["Accept"] = "application/json";
         Headers["app_id"] = App_Id;
         Headers["app_key"] = Key;
-
-        valid = false;
     }
 
     public override void IsValid(string word)
     {
         string newURL = BaseURL + "inflections/en/" + word;
         InProgress = true;
-        StartCoroutine(Validity(newURL, "valid"));
+        StartCoroutine(Validity(newURL));
     }
 
-    private IEnumerator Validity(string url, string type)
+    private IEnumerator Validity(string url)
     {
         using (WWW req = new WWW(url, null, Headers))
         {

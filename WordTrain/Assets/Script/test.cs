@@ -3,31 +3,27 @@ using System.Collections;
 
 public class test : MonoBehaviour
 {
+    AbstractAPI api;
     public string word;
     void Start()
     {
+        api = APIFactory.API();
         if (!string.IsNullOrEmpty(word))
         {
-            OxfordAPI.Instance.IsValid(word);
+            api.IsValid(word);
             StartCoroutine(ex());
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     IEnumerator ex()
     {
-        while(OxfordAPI.Instance.InProgress)
+        while(api.InProgress)
         {
             yield return new WaitForSecondsRealtime(1);
         }
 
         //execute method based on the validity
-        if (OxfordAPI.Instance.Valid)
+        if (api.Valid)
         {
             Debug.LogFormat("The word {0} is valid", word);
         }
@@ -36,6 +32,6 @@ public class test : MonoBehaviour
             Debug.LogFormat("The word {0} is invalid", word);
         }
 
-        OxfordAPI.Instance.Reset();
+        api.Reset();
     }
 }

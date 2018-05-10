@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class WordCheck : MonoBehaviour {
 
+    private AbstractAPI api;
 	string word = "";
 
 	// Use this for initialization
 	void Start () {
-		
+        api = APIFactory.API();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +24,7 @@ public class WordCheck : MonoBehaviour {
 
 			if (!string.IsNullOrEmpty(word))
 			{
-				OxfordAPI.Instance.IsValid(word);
+                api.IsValid(word);
 				StartCoroutine(ex());
 			}
 
@@ -33,13 +34,13 @@ public class WordCheck : MonoBehaviour {
 
 	IEnumerator ex()
 	{
-		while(OxfordAPI.Instance.InProgress)
+		while(api.InProgress)
 		{
 			yield return new WaitForSecondsRealtime(1);
 		}
 
 		//execute method based on the validity
-		if (OxfordAPI.Instance.Valid)
+		if (api.Valid)
 		{
 			Debug.LogFormat("The word {0} is valid", word);
 		}
@@ -48,6 +49,6 @@ public class WordCheck : MonoBehaviour {
 			Debug.LogFormat("The word {0} is invalid", word);
 		}
 
-		OxfordAPI.Instance.Reset();
+        api.Reset();
 	}
 }
