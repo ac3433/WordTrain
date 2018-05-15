@@ -7,25 +7,26 @@ public class test : MonoBehaviour
     public string word;
     void Start()
     {
-        api = APIFactory.API();
+        api = WordsAPI.Instance;
         if (!string.IsNullOrEmpty(word))
         {
-            api.IsValid(word);
+            api.SendWordToAPI(word);
             StartCoroutine(ex());
         }
     }
 
     IEnumerator ex()
     {
-        while(api.InProgress)
+        while (api.InProgress)
         {
-            yield return new WaitForSecondsRealtime(1);
+            yield return new WaitForSeconds(.3f);
         }
 
         //execute method based on the validity
         if (api.Valid)
         {
             Debug.LogFormat("The word {0} is valid", word);
+            Debug.LogFormat("The word '{0}' has {1} syllable(s)", word, api.Syllable);
         }
         else
         {

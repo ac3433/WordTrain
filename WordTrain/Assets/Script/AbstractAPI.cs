@@ -6,9 +6,9 @@ using UnityEngine;
 public abstract class AbstractAPI : MonoBehaviour {
 
     #region Singleton
-    private static AbstractAPI _instance;
+    protected static AbstractAPI _instance;
     //Used only once to ensure when one thread have access to create the instance
-    private static readonly object _Lock = new object();
+    protected static readonly object _Lock = new object();
 
     public static AbstractAPI Instance
     {
@@ -42,19 +42,21 @@ public abstract class AbstractAPI : MonoBehaviour {
     }
     #endregion
 
+    public abstract void PrintAPIName();
     protected string BaseURL { get; set; }
     protected string Key { get; set; }
     protected string App_Id { get; set; }
     protected Dictionary<string, string> Headers { get; set; }
-    public bool InProgress { get; set; }
-    public bool Valid { get; set; }
+    public bool InProgress { get; set; } //only one api should be activate at a given time
+    public bool Valid { get; protected set; }
+    public int Syllable { get; protected set; }
 
-    public abstract void IsValid(string word);
-    public abstract void GetDefinition(string word);
+    public abstract void SendWordToAPI(string word);
 
     public void Reset()
     {
         InProgress = false;
         Valid = false;
+        Syllable = 0;
     }
 }

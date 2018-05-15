@@ -7,9 +7,11 @@ public class WordCheck : MonoBehaviour {
     private AbstractAPI api;
 	string word = "";
 
+    private delegate void APIRequest(string word);
+
 	// Use this for initialization
 	void Start () {
-        api = APIFactory.API();
+        api = WordsAPI.Instance;
 	}
 	
 	// Update is called once per frame
@@ -24,25 +26,34 @@ public class WordCheck : MonoBehaviour {
 
 			if (!string.IsNullOrEmpty(word))
 			{
-                api.IsValid(word);
-				StartCoroutine(ex());
-			}
+                FillAPIData(word);
+
+
+            }
 
 		}
 		
 	}
 
+    public void FillAPIData(string word)
+    {
+        api.Reset();
+        api.SendWordToAPI(word);
+        StartCoroutine(ex());
+    }
+
 	IEnumerator ex()
 	{
 		while(api.InProgress)
 		{
-			yield return new WaitForSecondsRealtime(1);
+			yield return new WaitForSeconds(.3f);
 		}
 
 		//execute method based on the validity
 		if (api.Valid)
 		{
 			Debug.LogFormat("The word {0} is valid", word);
+            Debug.LogFormat("The word '{0}' has {1} syllable(s)", word, api.Syllable);
 		}
 		else
 		{
