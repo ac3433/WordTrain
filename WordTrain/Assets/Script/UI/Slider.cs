@@ -24,7 +24,7 @@ public class Slider : MonoBehaviour {
     {
         if (toggled)
         {
-            rectTransform.localPosition = oldPos;
+            rectTransform.localPosition -= newPos;
             toggled = false;
         } else
         {
