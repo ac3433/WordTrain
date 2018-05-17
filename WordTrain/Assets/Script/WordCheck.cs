@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WordCheck : MonoBehaviour {
 
@@ -34,6 +35,14 @@ public class WordCheck : MonoBehaviour {
 	public GameObject z;
 	string word = "";
 
+    public Text totalPointText;
+    public Text numPointsText;
+    public Text multiplierText;
+
+    int numPoints = 0;
+    int totalPoints = 0;
+    int numSyllables = 0;
+
     private delegate void APIRequest(string word);
 
 	// Use this for initialization
@@ -44,24 +53,33 @@ public class WordCheck : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        totalPointText.text = totalPoints.ToString();
+        numPointsText.text = numPoints.ToString();
+        multiplierText.text = "x" + numSyllables.ToString();
 
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
-			word = "";
-			for(int i = 0; i < this.transform.childCount; i++){
-				word = word + this.transform.GetChild(i).GetComponent<CardControl> ().letter;
-			}
-
-			if (!string.IsNullOrEmpty(word))
-			{
-                FillAPIData(word);
-
-
-            }
+            Validate();
 
 		}
 		
 	}
+
+    public void Validate()
+    {
+        word = "";
+        for (int i = 0; i < this.transform.childCount; i++)
+        {
+            word = word + this.transform.GetChild(i).GetComponent<CardControl>().letter;
+        }
+
+        if (!string.IsNullOrEmpty(word))
+        {
+            FillAPIData(word);
+
+
+        }
+    }
 
     public void FillAPIData(string word)
     {
@@ -82,6 +100,9 @@ public class WordCheck : MonoBehaviour {
 		{
 			Debug.LogFormat("The word {0} is valid", word);
             Debug.LogFormat("The word '{0}' has {1} syllable(s)", word, api.Syllable);
+
+            numSyllables = api.Syllable;
+            AddPoints();
 			removeCards ();
 			addCards();
 		}
@@ -92,6 +113,17 @@ public class WordCheck : MonoBehaviour {
 
         api.Reset();
 	}
+
+    void AddPoints()
+    {
+        numPoints = 0;
+        for (int i = this.transform.childCount - 2; i >= 0; i--)
+        {
+            CardControl c = transform.GetChild(i).GetComponent<CardControl>();
+            numPoints += c.value;
+        }
+        totalPoints += numPoints * numSyllables;
+    }
 
 	void removeCards(){
 
