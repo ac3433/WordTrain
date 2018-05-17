@@ -1644,7 +1644,7 @@ Prefab:
     - target: {fileID: 224186190537304092, guid: 05b6290a7ece9407fab3f86a29d563e2,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 421
+      value: 482.5
       objectReference: {fileID: 0}
     - target: {fileID: 224186190537304092, guid: 05b6290a7ece9407fab3f86a29d563e2,
         type: 2}
@@ -1744,7 +1744,7 @@ Prefab:
     - target: {fileID: 224837600273031636, guid: 3a4d2d44fd8c24625a90e6d93e5add6b,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 601
+      value: 662.5
       objectReference: {fileID: 0}
     - target: {fileID: 224837600273031636, guid: 3a4d2d44fd8c24625a90e6d93e5add6b,
         type: 2}
@@ -2040,7 +2040,7 @@ Prefab:
     - target: {fileID: 224930729552703402, guid: f1d85d0070885455a9f3abf43276c1e7,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 511
+      value: 572.5
       objectReference: {fileID: 0}
     - target: {fileID: 224930729552703402, guid: f1d85d0070885455a9f3abf43276c1e7,
         type: 2}
@@ -2978,7 +2978,7 @@ Prefab:
     - target: {fileID: 224588063989032362, guid: fce4f452b1ae04148b240fa5a69cd31e,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 331
+      value: 392.5
       objectReference: {fileID: 0}
     - target: {fileID: 224588063989032362, guid: fce4f452b1ae04148b240fa5a69cd31e,
         type: 2}
@@ -3483,7 +3483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2057256001
 Transform:
   m_ObjectHideFlags: 0

@@ -103,7 +103,8 @@ public class WordCheck : MonoBehaviour {
 
             numSyllables = api.Syllable;
             AddPoints();
-			removeCards ();
+            lockLastCard();
+            removeCards ();
 			addCards();
 		}
 		else
@@ -123,6 +124,11 @@ public class WordCheck : MonoBehaviour {
             numPoints += c.value;
         }
         totalPoints += numPoints * numSyllables;
+    }
+
+    void lockLastCard()
+    {
+        transform.GetChild(transform.childCount - 1).GetComponent<CardControl>().isLock = true;
     }
 
 	void removeCards(){
