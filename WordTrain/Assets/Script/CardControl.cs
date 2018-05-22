@@ -30,13 +30,7 @@ public class CardControl : MonoBehaviour {
             transform.position = new Vector3(moveTo.x, moveTo.y, transform.position.z);
             this.transform.SetParent(parent.parent);
 
-            foreach(Transform child in parent.parent)
-            {
-                if(child.GetComponent<CardControl>().isLock)
-                {
-                    child.SetSiblingIndex(0);
-                }
-            }
+
         }
 
 	}
@@ -46,6 +40,15 @@ public class CardControl : MonoBehaviour {
         if(!isLock)
         {
             this.transform.SetParent(parent);
+
+            foreach (Transform child in transform.parent)
+            {
+                Debug.Log(child.name);
+                if (child.GetComponent<CardControl>().isLock)
+                {
+                    child.SetSiblingIndex(0);
+                }
+            }
         }
 
 	}
