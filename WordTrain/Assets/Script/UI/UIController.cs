@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIController : MonoBehaviour {
 
     public GameObject MainMenuPanel;
+    public GameObject RulesPanel;
 
 	public void Quit()
     {
@@ -21,5 +22,16 @@ public class UIController : MonoBehaviour {
     {
         Time.timeScale = 0;
         MainMenuPanel.SetActive(true);
+    }
+
+    public void ToggleRules()
+    {
+        if (RulesPanel.activeSelf)
+        {
+            RulesPanel.SetActive(false);
+        } else
+        {
+            RulesPanel.SetActive(true);
+        }
     }
 }
