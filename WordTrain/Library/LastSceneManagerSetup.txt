@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scene/UITest.unity
+- path: Assets/Scene/BaseLevel.unity
   isLoaded: 1
   isActive: 1
