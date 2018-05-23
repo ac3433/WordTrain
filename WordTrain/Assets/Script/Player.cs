@@ -6,8 +6,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject hand;
 
-    public int totalPoint { get; private set; }
-    public int earnedPoint { get; private set; }
+    public int TotalPoint { get; private set; }
+    public int EarnedPoint { get; private set; }
     //enable the cards in the hand to be draggable.
     public void UnlockHand()
     {
@@ -38,8 +38,8 @@ public class Player : MonoBehaviour
 
     public void AddScore(int points)
     {
-        earnedPoint = points;
-        totalPoint += points;
+        EarnedPoint = points;
+        TotalPoint += points;
     }
 
 }
