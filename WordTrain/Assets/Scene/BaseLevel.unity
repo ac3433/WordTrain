@@ -262,7 +262,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 76364926}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1574405325}
+        m_MethodName: DiscardHand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &76364926
@@ -2049,12 +2060,9 @@ MonoBehaviour:
   x: {fileID: 1495790767173748, guid: 4ffbc3be3d6c44f308d89f18b47291fe, type: 2}
   y: {fileID: 1486478171148422, guid: e094bbbbef6254567bebed2719e94f78, type: 2}
   z: {fileID: 1739887512166878, guid: dffbc54dc76e9476e9af7359dd2d18e5, type: 2}
-  p1TotalPointText: {fileID: 1183487841}
-  p1NumPointsText: {fileID: 523266132}
-  p1MultiplierText: {fileID: 1112027695}
-  p2TotalPointText: {fileID: 1076556879}
-  p2NumPointsText: {fileID: 1621236308}
-  p2MultiplierText: {fileID: 62105234}
+  totalPointText: {fileID: 0}
+  numPointsText: {fileID: 0}
+  multiplierText: {fileID: 0}
 --- !u!1 &1049362398
 GameObject:
   m_ObjectHideFlags: 0
@@ -3312,12 +3320,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1253504619}
-        m_MethodName: 
+      - m_Target: {fileID: 1253504627}
+        m_MethodName: DiscardHand
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

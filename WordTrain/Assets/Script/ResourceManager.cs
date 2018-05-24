@@ -44,11 +44,12 @@ public class ResourceManager : MonoBehaviour
     private Dictionary<Card, int> deck; //Card, size of cards available
     private Dictionary<Card, int> startingDeck;
     private List<Card> listing;
-
+    private List<Card> vowels;
     private void Awake()
     {
         deck = new Dictionary<Card, int>();
         listing = new List<Card>();
+        vowels = new List<Card>();
         deck.Add(new Card('A', 1), 16); //0
         deck.Add(new Card('B', 3), 4);  //1
         deck.Add(new Card('C', 3), 6);
@@ -79,9 +80,18 @@ public class ResourceManager : MonoBehaviour
         foreach (Card card in deck.Keys)
         {
             listing.Add(card);
+
         }
+
+        vowels.Add(new Card('A', 1));
+        vowels.Add(new Card('E', 1));
+        vowels.Add(new Card('I', 1));
+        vowels.Add(new Card('U', 1));
+        vowels.Add(new Card('O', 1));
+
+
     }
-    
+
     /// <summary>
     /// Draw a card from the deck
     /// </summary>
@@ -92,23 +102,18 @@ public class ResourceManager : MonoBehaviour
             return null;
         int random = Random.Range(0, listing.Count - 1);
 
-        //if(random <= 12)
-        //{
-        //    Card card = listing[0];
-        //    RemoveCard(card);
-        //    return card;
-        //}
-        //else if(random <= 21)
-        //{
-        //    Card card = listing[1];
-        //    RemoveCard(card);
-        //    return card;
-        //}
+
 
         Card card = listing[random];
         RemoveCard(card);
         return card;
 
+    }
+
+    public Card GuarenteeVowels()
+    {
+        int rand = Random.Range(0, vowels.Count - 1);
+        return vowels[rand];
     }
 
     public void RemoveCard(Card card)
@@ -120,7 +125,7 @@ public class ResourceManager : MonoBehaviour
     public void Reset()
     {
         listing = new List<Card>();
-        foreach(Card card in deck.Keys)
+        foreach (Card card in deck.Keys)
         {
             listing.Add(card);
         }

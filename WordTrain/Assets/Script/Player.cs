@@ -19,14 +19,14 @@ public class Player : MonoBehaviour
         {
             LockHand();
         }
-        
+
     }
 
     //enable the cards in the hand to be draggable.
     public void UnlockHand()
     {
 
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             CardControl cac = child.GetComponent<CardControl>();
             if (cac != null)
@@ -38,12 +38,12 @@ public class Player : MonoBehaviour
     public void LockHand()
     {
         Debug.Log(gameObject.name);
-            foreach (Transform child in transform)
-            {
-                CardControl cac = child.GetComponent<CardControl>();
-                if (cac != null)
-                    cac.isLock = true;
-            }
+        foreach (Transform child in transform)
+        {
+            CardControl cac = child.GetComponent<CardControl>();
+            if (cac != null)
+                cac.isLock = true;
+        }
     }
 
     public void AddScore(int points, int multiplier)
@@ -53,22 +53,46 @@ public class Player : MonoBehaviour
         TotalPoint += points;
 
         txtEarnedPoint.text = EarnedPoint.ToString();
-        txtMultiplier.text = "x"+multiplier.ToString();
+        txtMultiplier.text = "x" + multiplier.ToString();
         txtScore.text = TotalPoint.ToString();
     }
 
     public void AddCard()
     {
         int hand = transform.childCount;
-        for(int i = hand; i < 7; i++)
+        int countVowels = 0;
+        int maxVowl = 2;
+        foreach (Transform child in transform)
+        {
+            CardControl c = child.GetComponent<CardControl>();
+            if (c.letter.ToLower().Equals("a") || c.letter.ToLower().Equals("e") || c.letter.ToLower().Equals("u") || c.letter.ToLower().Equals("i") || c.letter.ToLower().Equals("o"))
+            {
+                countVowels++;
+            }
+        }
+
+        if (countVowels < 2)
+        {
+            maxVowl = 2;
+        }
+
+        for (int i = hand; i < 7; i++)
         {
             GameObject randomBlankCard = RandomColor.Instance.GetRandomCard();
 
             GameObject instantCard = Instantiate(randomBlankCard, transform);
 
-            Card card = ResourceManager.Instance.Draw();
+            Card card;
+            if (maxVowl != 0)
+            {
+                card = ResourceManager.Instance.GuarenteeVowels();
+                maxVowl--;
+            }
+            else
+                card = ResourceManager.Instance.Draw();
 
-            if(card != null)
+
+            if (card != null)
             {
 
                 CardControl cc = instantCard.GetComponent<CardControl>();
@@ -87,8 +111,16 @@ public class Player : MonoBehaviour
             }
 
         }
-        
-        
 
+    }
+
+    public void DiscardHand()
+    {
+        foreach (Transform child in transform)
+        {
+            DestroyImmediate(child.gameObject);
+        }
+
+        AddCard();
     }
 }
