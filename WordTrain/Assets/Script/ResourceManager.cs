@@ -45,33 +45,35 @@ public class ResourceManager : MonoBehaviour
     private Dictionary<Card, int> startingDeck;
     private List<Card> listing;
 
-    private void Start()
+    private void Awake()
     {
         deck = new Dictionary<Card, int>();
-        deck.Add(new Card('A', 1), 16);
-        deck.Add(new Card('B', 3), 4);
+        listing = new List<Card>();
+        deck.Add(new Card('A', 1), 16); //0
+        deck.Add(new Card('B', 3), 4);  //1
         deck.Add(new Card('C', 3), 6);
-        deck.Add(new Card('D', 2), 8);
+        deck.Add(new Card('D', 2), 8);  //3
         deck.Add(new Card('E', 1), 24);
-        deck.Add(new Card('F', 4), 4);
+        deck.Add(new Card('F', 4), 4);  //5
         deck.Add(new Card('G', 2), 5);
-        deck.Add(new Card('H', 4), 5);
+        deck.Add(new Card('H', 4), 5);  //7
         deck.Add(new Card('I', 1), 13);
-        deck.Add(new Card('J', 8), 2);
+        deck.Add(new Card('J', 8), 2);  //9
         deck.Add(new Card('K', 5), 2);
-        deck.Add(new Card('M', 3), 6);
+        deck.Add(new Card('L', 5), 2); //11
+        deck.Add(new Card('M', 3), 6);  //12
         deck.Add(new Card('N', 1), 13);
-        deck.Add(new Card('O', 1), 15);
+        deck.Add(new Card('O', 1), 15); //14
         deck.Add(new Card('P', 3), 4);
-        deck.Add(new Card('Q', 10), 2);
+        deck.Add(new Card('Q', 10), 2); //16
         deck.Add(new Card('R', 1), 13);
-        deck.Add(new Card('S', 1), 10);
+        deck.Add(new Card('S', 1), 10); //18
         deck.Add(new Card('T', 1), 15);
-        deck.Add(new Card('U', 1), 7);
+        deck.Add(new Card('U', 1), 7);  //20
         deck.Add(new Card('V', 4), 3);
-        deck.Add(new Card('W', 4), 4);
+        deck.Add(new Card('W', 4), 4);  //22
         deck.Add(new Card('X', 8), 2);
-        deck.Add(new Card('Y', 4), 4);
+        deck.Add(new Card('Y', 4), 4);  //24
         deck.Add(new Card('Z', 10), 2);
 
         foreach (Card card in deck.Keys)
@@ -89,10 +91,24 @@ public class ResourceManager : MonoBehaviour
         if (listing.Count == 0)
             return null;
         int random = Random.Range(0, listing.Count - 1);
+
+        //if(random <= 12)
+        //{
+        //    Card card = listing[0];
+        //    RemoveCard(card);
+        //    return card;
+        //}
+        //else if(random <= 21)
+        //{
+        //    Card card = listing[1];
+        //    RemoveCard(card);
+        //    return card;
+        //}
+
         Card card = listing[random];
         RemoveCard(card);
-
         return card;
+
     }
 
     public void RemoveCard(Card card)

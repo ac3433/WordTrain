@@ -47,16 +47,16 @@ public class TurnManager : MonoBehaviour
     [SerializeField]
     private GameObject canvas; //this is to rotate the canvas than the camera. Camera make it look funky.
     
-    private Player CurrentPlayer;
+    public Player CurrentPlayer { get; private set; }
     public float CurrentRotationDegree { get; private set; }
-
-    private void Start()
+    private void Awake()
     {
         CurrentPlayer = playerOne;
     }
+
     public void NextTurn()
     {
-        RotateView();
+        //RotateView();
         SwitchPlayer();
     }
 
@@ -85,6 +85,8 @@ public class TurnManager : MonoBehaviour
         }
             
     }
+
+
 
         
 }
