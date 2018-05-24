@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -43,13 +45,19 @@ public class GameController : MonoBehaviour
     AbstractAPI api;
 
     public GameObject playArea;
-
+    public GameObject winner;
     public bool isDeckOut;
+    public bool isEnd;
+
+    private GameObject repeatedCard;
+    private int repeats;
 
     private void Start()
     {
         api = WordsAPI.Instance;
         isDeckOut = false;
+        isEnd = false;
+        repeats = 0;
     }
 
     private void Update()
@@ -101,18 +109,90 @@ public class GameController : MonoBehaviour
         //execute method based on the validity
         if (api.Valid)
         {
-            Debug.LogFormat("The word has syllable(s)", api.Syllable);
-            AddPoints(potentialPoints);
-            LockLastCard();
-            RemovePlayArea();
-            AddCard();
+            if(api.Syllable == 0)
+            {
+                Invalid();
+            }
+            else
+            {
+                Debug.LogFormat("The word has syllable(s)", api.Syllable);
+                AddPoints(potentialPoints);
+                LockLastCard();
+                RemovePlayArea();
+                AddCard();
+                repeatedCard = null;
+                repeats = 0;
+            }
+
         }
         else
         {
+            Invalid();
             Debug.LogFormat("The word is invalid");
         }
-
+        TurnManager.Instance.CurrentPlayer.isReset = false;
+        if (isDeckOut && isEnd)
+        {
+            GameObject win = winner.transform.Find("WinnerName").gameObject;
+            Text t = win.GetComponent<Text>();
+            if (TurnManager.Instance.playerOne.TotalPoint == TurnManager.Instance.playerTwo.TotalPoint)
+            {
+                t.text = "Tie";
+            }
+            else if (TurnManager.Instance.playerTwo.TotalPoint > TurnManager.Instance.playerOne.TotalPoint)
+            {
+                t.text = "Player Two";
+            }
+            else
+                t.text = "Player One";
+            winner.SetActive(true);
+        }
+        else if (isDeckOut)
+        {
+            isEnd = true;
+        }
         TurnManager.Instance.NextTurn();
+    }
+
+    private void Invalid()
+    {
+        List<GameObject> lst = new List<GameObject>();
+
+        foreach (Transform child in playArea.transform)
+        {
+            CardControl cc = child.GetComponent<CardControl>();
+            if (!cc.isLock)
+            {
+                lst.Add(child.gameObject);
+            }
+        }
+        TurnManager.Instance.CurrentPlayer.UpdateDiscardValue(lst.Count);
+        foreach (GameObject ob in lst)
+        {
+            DestroyImmediate(ob);
+        }
+
+        AddCard();
+
+        if (playArea.transform.childCount != 0)
+        {
+            if (repeatedCard == null)
+            {
+                repeatedCard = playArea.transform.GetChild(0).gameObject;
+                Debug.Log("hiyo");
+            }
+            else if (playArea.transform.GetChild(0).gameObject.Equals(repeatedCard))
+            {
+                repeats++;
+                Debug.Log("hiya");
+            }
+            if (repeats == 1)
+            {
+                DestroyImmediate(repeatedCard);
+                repeatedCard = null;
+                repeats = 0;
+            }
+        }
     }
 
     private void AddPoints(int points)
@@ -132,10 +212,15 @@ public class GameController : MonoBehaviour
 
     private void RemovePlayArea()
     {
+        int count = playArea.transform.childCount - 1;
         for(int i = playArea.transform.childCount - 2; i >= 0; i--)
         {
             DestroyImmediate(playArea.transform.GetChild(i).gameObject);
         }
+
+
+
+        TurnManager.Instance.CurrentPlayer.UpdateDiscardValue(count);
     }
 
     private void AddCard()

@@ -40,10 +40,10 @@ public class TurnManager : MonoBehaviour
     }
     #endregion
 
-    [SerializeField]
-    private Player playerOne;
-    [SerializeField]
-    private Player playerTwo;
+
+    public Player playerOne;
+
+    public Player playerTwo;
     [SerializeField]
     private GameObject canvas; //this is to rotate the canvas than the camera. Camera make it look funky.
     

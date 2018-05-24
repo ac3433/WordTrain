@@ -24,6 +24,7 @@ public class CardControl : MonoBehaviour {
             Vector3 moveTo = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
             transform.position = new Vector3(moveTo.x, moveTo.y, transform.position.z);
             this.transform.SetParent(parent.parent);
+            transform.SetAsLastSibling();
         }
 
 	}
@@ -40,6 +41,7 @@ public class CardControl : MonoBehaviour {
                 {
                     child.SetSiblingIndex(0);
                 }
+
             }
         }
 

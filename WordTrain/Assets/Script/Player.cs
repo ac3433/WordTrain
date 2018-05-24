@@ -7,11 +7,12 @@ public class Player : MonoBehaviour
 
     public int TotalPoint { get; private set; }
     public int EarnedPoint { get; private set; }
-
+    public int Discard { get; private set; }
     public Text txtScore;
     public Text txtMultiplier;
     public Text txtEarnedPoint;
-
+    public Text txtDiscard;
+    public bool isReset {get;set;}
     private void Start()
     {
         AddCard();
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
         {
             LockHand();
         }
-
+        isReset = false;
     }
 
     //enable the cards in the hand to be draggable.
@@ -116,11 +117,24 @@ public class Player : MonoBehaviour
 
     public void DiscardHand()
     {
-        foreach (Transform child in transform)
+        if (isReset)
+            return;
+        if(transform.childCount == 7)
         {
-            DestroyImmediate(child.gameObject);
-        }
+            foreach (Transform child in transform)
+            {
+                DestroyImmediate(child.gameObject);
+            }
 
-        AddCard();
+            AddCard();
+        }
+        UpdateDiscardValue(7);
+        isReset = true;
+    }
+
+    public void UpdateDiscardValue(int value)
+    {
+        Discard += value;
+        txtDiscard.text = Discard.ToString();
     }
 }

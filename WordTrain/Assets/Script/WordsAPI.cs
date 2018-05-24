@@ -61,6 +61,13 @@ public class WordsAPI : AbstractAPI
         int from = text.IndexOf("count\":") + "count\":".Length;
         int to = text.IndexOf(",\"list");
 
+        if (to - from <= 0)
+        {
+            Syllable = 0;
+            return;
+        }
+            
+
         string result = text.Substring(from, to - from);
 
         int value = 0;
