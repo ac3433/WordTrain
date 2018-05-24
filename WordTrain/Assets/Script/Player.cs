@@ -1,45 +1,94 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject hand;
 
     public int TotalPoint { get; private set; }
     public int EarnedPoint { get; private set; }
+
+    public Text txtScore;
+    public Text txtMultiplier;
+    public Text txtEarnedPoint;
+
+    private void Start()
+    {
+        AddCard();
+        if (TurnManager.Instance.CurrentPlayer != this)
+        {
+            LockHand();
+        }
+        
+    }
+
     //enable the cards in the hand to be draggable.
     public void UnlockHand()
     {
-        if(hand != null)
+
+        foreach(Transform child in transform)
         {
-            foreach(Transform child in hand.transform)
-            {
-                CardControl cac = child.GetComponent<CardControl>();
-                if (cac != null)
-                    cac.isLock = false;
-            }
+            CardControl cac = child.GetComponent<CardControl>();
+            if (cac != null)
+                cac.isLock = false;
         }
     }
 
     //disable the cards in the hands to be drag
     public void LockHand()
     {
-        if (hand != null)
-        {
-            foreach (Transform child in hand.transform)
+        Debug.Log(gameObject.name);
+            foreach (Transform child in transform)
             {
                 CardControl cac = child.GetComponent<CardControl>();
                 if (cac != null)
                     cac.isLock = true;
             }
-        }
     }
 
-    public void AddScore(int points)
+    public void AddScore(int points, int multiplier)
     {
-        EarnedPoint = points;
+
+        EarnedPoint = points * multiplier;
         TotalPoint += points;
+
+        txtEarnedPoint.text = EarnedPoint.ToString();
+        txtMultiplier.text = "x"+multiplier.ToString();
+        txtScore.text = TotalPoint.ToString();
     }
 
+    public void AddCard()
+    {
+        int hand = transform.childCount;
+        for(int i = hand; i < 7; i++)
+        {
+            GameObject randomBlankCard = RandomColor.Instance.GetRandomCard();
+
+            GameObject instantCard = Instantiate(randomBlankCard, transform);
+
+            Card card = ResourceManager.Instance.Draw();
+
+            if(card != null)
+            {
+
+                CardControl cc = instantCard.GetComponent<CardControl>();
+                Text letter = instantCard.transform.GetChild(0).GetComponent<Text>();
+                Text value = instantCard.transform.GetChild(1).GetComponent<Text>();
+
+                cc.letter = card.Letter.ToString();
+                cc.value = card.Value;
+
+                letter.text = cc.letter;
+                value.text = cc.value.ToString();
+            }
+            else
+            {
+                GameController.Instance.isDeckOut = true;
+            }
+
+        }
+        
+        
+
+    }
 }

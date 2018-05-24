@@ -48,7 +48,7 @@ public class WordCheck : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         api = WordsAPI.Instance;
-		addCards ();
+		//addCards ();
 	}
 	
 	// Update is called once per frame

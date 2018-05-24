@@ -62,6 +62,10 @@ public class WordsAPI : AbstractAPI
         int to = text.IndexOf(",\"list");
 
         string result = text.Substring(from, to - from);
-        Syllable = Convert.ToInt32(result);
+
+        int value = 0;
+        
+        Int32.TryParse(result,out value);
+        Syllable = value;
     }
 }

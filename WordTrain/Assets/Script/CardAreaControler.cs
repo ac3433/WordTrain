@@ -17,6 +17,5 @@ public class CardAreaControler : MonoBehaviour {
 	void OnTriggerEnter(Collider other)
 	{
 		other.GetComponent<CardControl>().parent = this.transform;
-		Debug.Log ("test");
 	}
 }
